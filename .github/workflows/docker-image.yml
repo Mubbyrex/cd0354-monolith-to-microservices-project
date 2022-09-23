@@ -29,9 +29,9 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v3
         with:
-          file: ./reverseproxy/Dockerfile
+          file: ./udagram-reverseproxy/Dockerfile
           push: true
-          tags:  ${{ secrets.DOCKER_USERNAME }}/reverseproxy:v1
+          tags:  ${{ secrets.DOCKER_USERNAME }}/udagram-reverseproxy:v1
 
 #   build:
 
