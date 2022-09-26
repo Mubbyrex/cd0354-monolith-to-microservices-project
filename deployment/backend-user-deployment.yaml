@@ -1,24 +1,34 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    service: backend-user
   name: backend-user
 spec:
   selector:
     matchLabels:
-      run: backend-user
+      service: backend-user
   replicas: 2
   template:
     metadata:
       labels:
-        run: backend-user
+        service: backend-user
     spec:
       containers:
         - name: backend-user
-          image: docker.io/mubbyrex/udagram-api-user:v1
+          image: docker.io/mubbyrex/udagram-api-user:v3
           ports:
-            - containerPort: 80
+            - containerPort: 8080
+          imagePullPolicy: Always
           resources:
             limits:
-              cpu: 500m
+              cpu: 80m
             requests:
-              cpu: 200m
+              cpu: 80m
+          envFrom:
+            - secretRef:
+                name: env-secret
+                optional: false
+            - configMapRef:
+                name: my-configmap
+                optional: false
