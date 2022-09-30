@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: frontend
+  name: frontend
+spec:
+  selector:
+    matchLabels:
+      service: frontend
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        service: frontend
+        api: external
+    spec:
+      containers:
+        - name: frontend
+          imagePullPolicy: Always
+          image: docker.io/mubbyrex/udagram-frontend:v4
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
