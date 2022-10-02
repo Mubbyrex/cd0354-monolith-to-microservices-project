@@ -18,7 +18,7 @@ spec:
       containers:
         - name: frontend
           imagePullPolicy: Always
-          image: docker.io/mubbyrex/udagram-frontend:v4
+          image: docker.io/mubbyrex/udagram-frontend:v6
           ports:
             - containerPort: 80
           resources:
