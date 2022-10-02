@@ -26,7 +26,11 @@ jobs:
              docker tag udagram-api-user mubbyrex/udagram-api-user:v3
 
              docker build -t udagram-frontend ./udagram-frontend
+<<<<<<< HEAD
              docker tag udagram-frontend mubbyrex/udagram-frontend:v6
+=======
+             docker tag udagram-frontend mubbyrex/udagram-frontend:v7
+>>>>>>> d2afee62dfaa7df0e311e0b056382c9c60e2aa64
              docker build -t udagram-reverseproxy ./udagram-reverseproxy
              docker tag udagram-reverseproxy mubbyrex/udagram-reverseproxy:v3
              echo "-------- All images succesfully built----------"
@@ -35,7 +39,11 @@ jobs:
              echo "-------------- Pushing images to dockerhub-------"
              docker push mubbyrex/udagram-api-feed:v3
              docker push mubbyrex/udagram-api-user:v3
+<<<<<<< HEAD
              docker push mubbyrex/udagram-frontend:v6
+=======
+             docker push mubbyrex/udagram-frontend:v7
+>>>>>>> d2afee62dfaa7df0e311e0b056382c9c60e2aa64
              docker push mubbyrex/udagram-reverseproxy:v3
 workflows:
   default:
