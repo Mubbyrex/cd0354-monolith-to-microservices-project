@@ -114,3 +114,68 @@ I created a pipeline for continous integration
 the images got built and pushed to DockerHub
 
 ![docker_image](screenshots/Docker/Docker.png)
+
+### Container Orchestration with Kubernetes(CD)
+
+Created container using eksctl
+
+```
+aws configure
+eksctl create cluster --name myCluster --region=us-east-1 --nodes-min=2 --nodes-max=3
+```
+
+The command above
+
+- configured aws to run with the environmental variables stored locally
+- created an auto-generated name
+- created two m5.large worker nodes.
+- Used the Linux AMIs as the underlying machine image
+- created an autoscaling group with [2-3] nodes
+- wrote cluster credentials to the default config file locally.
+
+created the following files
+
+- env-configmap.yaml
+- env-secret.yam
+- aws-secret.yaml
+  I also created service and deployments yaml files for the front, reverseproxy and backend apps
+
+Ran the following command in my command line to create apply the created yaml files
+
+```
+cd deployment
+
+# Apply env variables and secrets
+kubectl apply -f aws-secret.yaml
+kubectl apply -f env-secret.yaml
+kubectl apply -f env-configmap.yaml
+
+# Deployments
+kubectl apply -f backend-feed-deployment.yaml
+kubectl apply -f frontend-deployment.yaml
+kubectl apply -f backend-user-deployment.yaml
+kubectl apply -f reverseproxy-deployment.yaml
+
+# Service
+kubectl apply -f backend-feed-service.yaml
+kubectl apply -f backend-feed-service.yaml
+kubectl apply -f backend-user-service.yaml
+kubectl apply -f reverseproxy-service.yaml
+```
+
+![get pods](/screenshots/Kubectl/get-pods.png)
+![get pods](</screenshots/Kubectl/get-services(1).png>)
+
+I exposed the frontend and reverseproxy deployments to external traffic
+
+```
+kubectl expose deployment frontend --type=LoadBalancer --name=publicfrontend
+kubectl expose deployment reverseproxy --type=LoadBalancer --name=publicreverseproxy
+```
+
+after a successful Deployment, I updated my frontend to send request to the LoadBalancer service of my reverse proxy. I then rebuilt my frontend image and set the image in my frontend deployment to the new frontend image
+` kubectl set image deployment frontend frontend=mubbyrex/udagram-frontend:v6`
+
+I also configured an Horizontal Pod Autoscaling to handle load
+
+![HPA](/screenshots/Kubectl/describe%20hpa.png)

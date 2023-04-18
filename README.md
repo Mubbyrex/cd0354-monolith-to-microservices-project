@@ -2,77 +2,49 @@
 
 Udagram is a simple cloud application. It allows users to register and log into a web client, post photos to the feed, and process photos using an image filtering microservice.
 
-The project is split into two parts:
-1. Frontend - Angular web application built with Ionic Framework
-2. Backend RESTful API - Node-Express application
+## Overview
 
-## Getting Started
-> _tip_: it's recommended that you start with getting the backend API running since the frontend web application depends on the API.
+This is my personal project aimed at converting a monolith application into a microservice architecture. The main goal of this project is to improve scalability, maintainability, and deployment flexibility of the application by leveraging microservices and cloud services provided by AWS, as well as modern DevOps tools like Circle CI, Docker, and Kubernetes.
 
-### Prerequisite
-1. The depends on the Node Package Manager (NPM). You will need to download and install Node from [https://nodejs.com/en/download](https://nodejs.org/en/download/). This will allow you to be able to run `npm` commands.
-2. Environment variables will need to be set. These environment variables include database connection details that should not be hard-coded into the application code.
+## Technologies Used
 
-#### Environment Script
-A file named `set_env.sh` has been prepared as an optional tool to help you configure these variables on your local development environment.
- 
-We do _not_ want your credentials to be stored in git. After pulling this `starter` project, run the following command to tell git to stop tracking the script in git but keep it stored locally. This way, you can use the script for your convenience and reduce risk of exposing your credentials.
-`git rm --cached set_env.sh`
+- AWS RDS: Used to store metadata of the application.
+- AWS S3: Used to store images.
+- Nginx Reverse Proxy: Used as a means of communication between the frontend and the backend services.
+- Docker: Used for containerization of the services.
+- Kubernetes: Used for container orchestration and deployment.
+- Circle CI: Used for continuous integration and continuous deployment (CI/CD).
+  -Git: Used for version control and collaborative development.
 
-Afterwards, we can prevent the file from being included in your solution by adding the file to our `.gitignore` file.
+## Project Structure
 
+The project has been divided into the following components:
 
+Backend Services: The original monolith application has been split into two independent backend services. These services are deployed as separate containers using Docker and orchestrated with Kubernetes. They communicate with each other through the Nginx Reverse Proxy.
 
+Frontend Service: The frontend service remains unchanged and communicates with the backend services through the Nginx Reverse Proxy.
 
-### 2. S3
-Create an AWS S3 bucket. The S3 bucket is used to store images that are displayed in Udagram.
+AWS RDS: The metadata of the application is stored in an AWS RDS database. The backend services communicate with the RDS database to retrieve and store metadata.
 
-Set the config values for environment variables prefixed with `AWS_` in `set_env.sh`.
+AWS S3: The images used in the application are stored in an AWS S3 bucket. The backend services communicate with the S3 bucket to upload and retrieve images.
 
-### 3. Backend API
-Launch the backend API locally. The API is the application's interface to S3 and the database.
+Nginx Reverse Proxy: A separate service running Nginx is used as a reverse proxy to communicate between the frontend and backend services. It handles routing and load balancing between the backend services.
 
-* To download all the package dependencies, run the command from the directory `udagram-api/`:
-    ```bash
-    npm install .
-    ```
-* To run the application locally, run:
-    ```bash
-    npm run dev
-    ```
-* You can visit `http://localhost:8080/api/v0/feed` in your web browser to verify that the application is running. You should see a JSON payload. Feel free to play around with Postman to test the API's.
+Circle CI: Circle CI is used for continuous integration and continuous deployment (CI/CD). It is configured to automatically build, test, and deploy the application to the Kubernetes cluster when changes are pushed to the repository.
 
-### 4. Frontend App
-Launch the frontend app locally.
+Docker and Kubernetes: Docker is used for containerization of the services, and Kubernetes is used for container orchestration and deployment. Docker images are built and pushed to a container registry, and Kubernetes is used to deploy and manage the containers in a cluster.
 
-* To download all the package dependencies, run the command from the directory `udagram-frontend/`:
-    ```bash
-    npm install .
-    ```
-* Install Ionic Framework's Command Line tools for us to build and run the application:
-    ```bash
-    npm install -g ionic
-    ```
-* Prepare your application by compiling them into static files.
-    ```bash
-    ionic build
-    ```
-* Run the application locally using files created from the `ionic build` command.
-    ```bash
-    ionic serve
-    ```
-* You can visit `http://localhost:8100` in your web browser to verify that the application is running. You should see a web interface.
+Setup and Deployment
+To set up and deploy the application, follow these steps:
 
-## Tips
-1. Take a look at `udagram-api` -- does it look like we can divide it into two modules to be deployed as separate microservices?
-2. The `.dockerignore` file is included for your convenience to not copy `node_modules`. Copying this over into a Docker container might cause issues if your local environment is a different operating system than the Docker image (ex. Windows or MacOS vs. Linux).
-3. It's useful to "lint" your code so that changes in the codebase adhere to a coding standard. This helps alleviate issues when developers use different styles of coding. `eslint` has been set up for TypeScript in the codebase for you. To lint your code, run the following:
-    ```bash
-    npx eslint --ext .js,.ts src/
-    ```
-    To have your code fixed automatically, run
-    ```bash
-    npx eslint --ext .js,.ts src/ --fix
-    ```
-4. `set_env.sh` is really for your backend application. Frontend applications have a different notion of how to store configurations. Configurations for the application endpoints can be configured inside of the `environments/environment.*ts` files.
-5. In `set_env.sh`, environment variables are set with `export $VAR=value`. Setting it this way is not permanent; every time you open a new terminal, you will have to run `set_env.sh` to reconfigure your environment variables. To verify if your environment variable is set, you can check the variable with a command like `echo $POSTGRES_USERNAME`.
+Set up an AWS RDS database for storing metadata of the application.
+Set up an AWS S3 bucket for storing images used in the application.
+Build Docker images for the backend and frontend services, and push them to a container registry.
+Set up a Kubernetes cluster and deploy the Docker containers using Kubernetes manifests.
+Set up the Nginx Reverse Proxy service using a Docker container and configure it to route traffic to the backend services.
+Set up Circle CI to automatically build, test, and deploy the application to the Kubernetes cluster when changes are pushed to the repository.
+For detailed instructions on how to set up and deploy the application, please refer to the documentation in the respective directories of each component.
+
+Conclusion
+This project demonstrates the conversion of a monolith application into a microservice architecture using various AWS services, Nginx Reverse Proxy, Docker, and Kubernetes. It also showcases the implementation of CI/CD using Circle CI for automated building, testing, and deployment. I hope this project serves as a useful reference for others interested in similar topics. Please feel free to reach out to me with any questions or feedback.
+The [JOURNAL.md](/Journal.md) file contains a walkthrough of the project being built
