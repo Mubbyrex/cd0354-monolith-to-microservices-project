@@ -34,7 +34,7 @@ Circle CI: Circle CI is used for continuous integration and continuous deploymen
 
 Docker and Kubernetes: Docker is used for containerization of the services, and Kubernetes is used for container orchestration and deployment. Docker images are built and pushed to a container registry, and Kubernetes is used to deploy and manage the containers in a cluster.
 
-Setup and Deployment
+### Setup and Deployment
 To set up and deploy the application, follow these steps:
 
 Set up an AWS RDS database for storing metadata of the application.
@@ -45,6 +45,7 @@ Set up the Nginx Reverse Proxy service using a Docker container and configure it
 Set up Circle CI to automatically build, test, and deploy the application to the Kubernetes cluster when changes are pushed to the repository.
 For detailed instructions on how to set up and deploy the application, please refer to the documentation in the respective directories of each component.
 
-Conclusion
+### Conclusion
 This project demonstrates the conversion of a monolith application into a microservice architecture using various AWS services, Nginx Reverse Proxy, Docker, and Kubernetes. It also showcases the implementation of CI/CD using Circle CI for automated building, testing, and deployment. I hope this project serves as a useful reference for others interested in similar topics. Please feel free to reach out to me with any questions or feedback.
+
 The [JOURNAL.md](/Journal.md) file contains a walkthrough of the project being built
