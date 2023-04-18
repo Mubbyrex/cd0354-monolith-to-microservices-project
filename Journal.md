@@ -7,6 +7,8 @@ I create a PostgreSQL database on AWS RDS. The database is used to store the app
 - We will need to use password authentication for this project. This means that a username and password is needed to authenticate and access the database.
 - The port number will need to be set as `5432`. This is the typical port that is used by PostgreSQL so it is usually set to this port by default.
 
+configured my AWS RDS fields with the following values on the AWS console
+
 | Field                                                | Value                                                                              |
 | ---------------------------------------------------- | ---------------------------------------------------------------------------------- |
 | Database creation method                             | Standard create. Easy create option creates a private database by default          |
@@ -65,3 +67,45 @@ I also added configured CORS
 	}
 ]```
 ````
+
+### Conversion of Monolith features to microservices
+
+Created two backend directories
+
+- udagram-api-feed
+- udagram-api-user
+
+I then split the code of my backend directory into the two new directories, so they run independently of each other
+
+Created similar DockerFILEs in both backend directories since they require the same dependencies
+[dockerfile](/udagram-api-feed/Dockerfile)
+[dockerfile](/udagram-api-user/Dockerfile)
+
+I also created a Dockerfile in the frontend folder
+[dockerfile](/udagram-frontend/Dockerfile)
+
+### Reverse Proxy for communication
+
+I create a new directory called "udagram-reverseproxy" for an application named reverseproxy running the Nginx server. The reverseproxy service will help add another layer between the frontend and backend APIs so that the frontend only uses a single endpoint and doesn't realize it's deployed separately.
+
+This is the structure of my microservices app
+![microservice chart](/screenshots/microservice_chart.jpg)
+
+Created a 'nginx.conf' file
+[dockerfile](/udagram-reverseproxy/nginx.conf)
+
+Also a Dockerfile
+[dockerfile](/udagram-reverseproxy/Dockerfile)
+
+### Continuous Integration with Circle CI
+
+I created a pipeline for continous integration
+
+[integration](/.circleci/config.yml)
+
+![circleci](screenshots/CIRCLE%20CI/1.png)
+![circleci](screenshots/CIRCLE%20CI/2.png)
+
+the images got built and pushed to DockerHub
+
+![docker_image](screenshots/Docker/Docker.png)
