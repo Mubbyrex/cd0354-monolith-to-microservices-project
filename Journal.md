@@ -78,11 +78,14 @@ Created two backend directories
 I then split the code of my backend directory into the two new directories, so they run independently of each other
 
 Created similar DockerFILEs in both backend directories since they require the same dependencies
-[dockerfile](/udagram-api-feed/Dockerfile)
-[dockerfile](/udagram-api-user/Dockerfile)
+
+[Backend-feed dockerfile](/udagram-api-feed/Dockerfile)
+
+[Backend-User dockerfile](/udagram-api-user/Dockerfile)
 
 I also created a Dockerfile in the frontend folder
-[dockerfile](/udagram-frontend/Dockerfile)
+
+[Frontend dockerfile](/udagram-frontend/Dockerfile)
 
 ### Reverse Proxy for communication
 
@@ -92,16 +95,18 @@ This is the structure of my microservices app
 ![microservice chart](/screenshots/microservice_chart.jpg)
 
 Created a 'nginx.conf' file
-[dockerfile](/udagram-reverseproxy/nginx.conf)
+
+[nginx.conf file](/udagram-reverseproxy/nginx.conf)
 
 Also a Dockerfile
-[dockerfile](/udagram-reverseproxy/Dockerfile)
+
+[Reverseproxy dockerfile](/udagram-reverseproxy/Dockerfile)
 
 ### Continuous Integration with Circle CI
 
 I created a pipeline for continous integration
 
-[integration](/.circleci/config.yml)
+[Circle CI integration file](/.circleci/config.yml)
 
 ![circleci](screenshots/CIRCLE%20CI/1.png)
 ![circleci](screenshots/CIRCLE%20CI/2.png)
