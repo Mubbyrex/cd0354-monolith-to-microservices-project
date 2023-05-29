@@ -14,7 +14,7 @@ This is my personal project aimed at converting a monolith application into a mi
 - Docker: Used for containerization of the services.
 - Kubernetes: Used for container orchestration and deployment.
 - Circle CI: Used for continuous integration and continuous deployment (CI/CD).
-  -Git: Used for version control and collaborative development.
+- Git: Used for version control and collaborative development.
 
 ## Project Structure
 
